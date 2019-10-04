@@ -38,63 +38,23 @@ public class Marketing {
 //        System.out.println("接口返回的token是："+resToken);
     }
 
-//
-//    //添加分类接口
-//    @Test
-//    public void testAddCategory(){
-//        long nowDate =  new Date().getTime();
-//        String categoryName = "分类"+nowDate;
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("name",categoryName);
-//        String mapJson = JSON.toJSONString(map);
-//        System.out.println("mapJson的值是："+mapJson);
-//        Response response =
-//                given().
-//                        body(mapJson).
-//                        headers("token",token,
-//                                "Content-Type","application/json; charset=UTF-8").
-//                        when().
-//                        post("https://admin-test300.newtamp.cn/api/mc/v1/content/category").
-//                        then().
-//                        body("msg",equalTo("成功")).
-//                        body("success",equalTo(true)).
-//                        body("param.status",equalTo("INITIALIZED")).
-//                        extract().response();
-//        System.out.println("【添加分类】接口返回信息是："+response.asString());
-//    }
-//
-//    //查询分类列表接口
-//    @Test
-//    public void testListCategory(){
-//        Response response =
-//                given().
-//                        headers("Authorization",token,
-//                                "token",token).
-//                        when().
-//                        get("https://admin-test300.newtamp.cn/api/mc/v1/content/category/list?page=0&pageSize=20").
-//                        then().
-//                        body("msg",equalTo("成功")).
-//                        extract().response();
-//        System.out.println("【查询分类列表1】接口返回信息是："+response.asString());
-//    }
-//
-//    //查询作者列表接口
-//    @Test
-//    public void testListAuthor(){
-//        Response response =
-//                given().
-//                        headers("Authorization",token,
-//                                "token",token).
-//                        when().
-//                        get("https://admin-test300.newtamp.cn/api/mc/v2/content/list?page=0&pageSize=20&categoryId=&authorId=&media=").
-//                        then().log().ifError().
-//                        body("msg",equalTo("成功")).
-//                        extract().response();
-//        System.out.println("【查询作者列表】接口返回信息是："+response.asString());
-//    }
+    //查询作者列表接口
+    @Test(priority = 1)
+    public void testListAuthor(){
+        Response response =
+                given().
+                        headers("Authorization",token,
+                                "token",token).
+                        when().
+                        get("https://admin-test300.newtamp.cn/api/mc/v2/content/list?page=0&pageSize=20&categoryId=&authorId=&media=").
+                        then().log().ifError().
+                        body("msg",equalTo("成功")).
+                        extract().response();
+        System.out.println("【查询作者列表】接口返回信息是："+response.asString());
+    }
 
     //添加作者
-    @Test(priority = 1)
+    @Test(priority = 2)
     public void testAddAuthor(){
 
         long nowDate =  new Date().getTime();
@@ -125,7 +85,7 @@ public class Marketing {
     }
 
     //修改作者name
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void testEditAuthor(){
 
         //拼接请求地址
@@ -183,7 +143,7 @@ public class Marketing {
     }
 
     //删除作者
-    @Test(priority = 3,enabled = false)
+    @Test(priority = 4,enabled = false)
     public void testDeleteAuthor(){
 
         String deleteAuthorUrl = "https://admin-test300.newtamp.cn/api/mc/v1/content/author/archive?authorId="+authorId;
@@ -201,4 +161,46 @@ public class Marketing {
         System.out.println("【删除作者】接口返回信息是："+response.asString());
 
     }
+
+
+    //查询分类列表接口
+    @Test(priority = 5)
+    public void testListCategory(){
+        Response response =
+                given().
+                        headers("Authorization",token,
+                                "token",token).
+                        when().
+                        get("https://admin-test300.newtamp.cn/api/mc/v1/content/category/list?page=0&pageSize=20").
+                        then().
+                        body("msg",equalTo("成功")).
+                        extract().response();
+        System.out.println("【查询分类列表1】接口返回信息是："+response.asString());
+    }
+
+
+    //添加分类接口
+    @Test(priority = 6)
+    public void testAddCategory(){
+        long nowDate =  new Date().getTime();
+        String categoryName = "分类"+nowDate;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("name",categoryName);
+        String mapJson = JSON.toJSONString(map);
+        System.out.println("mapJson的值是："+mapJson);
+        Response response =
+                given().
+                        body(mapJson).
+                        headers("token",token,
+                                "Content-Type","application/json; charset=UTF-8").
+                        when().
+                        post("https://admin-test300.newtamp.cn/api/mc/v1/content/category").
+                        then().
+                        body("msg",equalTo("成功")).
+                        body("success",equalTo(true)).
+                        body("param.status",equalTo("INITIALIZED")).
+                        extract().response();
+        System.out.println("【添加分类】接口返回信息是："+response.asString());
+    }
+
 }
